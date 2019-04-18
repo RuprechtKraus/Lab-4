@@ -77,6 +77,61 @@ function filterArray(arr, filter)
   return resultArray;
 }
 
+function toOneDimensionalArray(Arr) 
+{
+  var buf_Arr = [];
+
+  for (var j = 0; j <= Arr.length - 1; j++) 
+  {
+    Array.isArray(Arr[j]) ? buf_Arr = spliceArrays(buf_Arr, Arr[j]) : buf_Arr.push(Arr[j]);
+  }
+
+  return buf_Arr;
+}
+
+function spliceArrays(Arr1, Arr2) 
+{
+  var buf_result = [];
+  
+  for (var i = 0; i <= Arr1.length; i++) 
+  {
+    if (i != Arr1.length) 
+    {
+      Array.isArray(Arr1[i]) ?  buf_result = spliceArrays(buf_result, Arr1[i]) :  buf_result.push(Arr1[i]); 
+    }
+  }
+
+  for (var i = 0; i <= Arr2.length; i++) 
+  {
+    if (i != Arr2.length) 
+    {
+      Array.isArray(Arr2[i]) ? buf_result = spliceArrays(buf_result, Arr2[i]) : buf_result.push(Arr2[i]); 
+    }
+  }
+
+  return buf_result;
+}
+
+function isArrayEqual(Arr1, Arr2) 
+{
+  if (!Array.isArray(Arr1) || !Array.isArray(Arr2) || Arr1.length != Arr2.length) 
+  {
+    return false;
+  }
+
+  Arr1 = toOneDimensionalArray(Arr1);
+  Arr2 = toOneDimensionalArray(Arr2);
+
+  for (var i = 0; i < Arr1.length; i++) 
+  {
+    if ((Arr1[i] !== Arr2[i]) && (!isNaN(Arr1[i]) && !isNaN(Arr2[i]))) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 var arr = [0, 1, 2, 3, 4, 2, 5, 6];
 
 function like() 
